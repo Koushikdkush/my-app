@@ -1,4 +1,11 @@
 .form-control:focus {
   box-shadow: none !important;
+}
+
+.form-control {
+  border-radius: 0 !important;
+}
+
+.btn {
   border-radius: 0 !important;
 }
