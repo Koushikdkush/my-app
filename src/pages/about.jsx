@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from "react";
+import ProductDataList from "../components/ProductDataList";
+import withDataFetching from "../Hoc_components/withDataFetching";
 
 function About() {
 
@@ -9,6 +11,7 @@ function About() {
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(null);
     const [failed, setFailed] = useState(null);
+
 
 
 
@@ -48,12 +51,13 @@ function About() {
 
     }
 
+    const ProductList = withDataFetching(ProductDataList, 'https://dummyjson.com/products');
 
     return (
         <>
             <div className="container p-2 mt-2">
                 <div className="row">
-                    <div className="col-6 d-flex">
+                    <div className="col-12 col-md-6 d-flex">
                         <input
                             placeholder="Search Item"
                             type="text" ref={searchBoxRef}
@@ -91,6 +95,10 @@ function About() {
                         }
                     </div>
                 </div>
+            </div>
+
+            <div className="container">
+                <ProductList/>
             </div>
 
         </>
