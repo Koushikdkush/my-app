@@ -11,7 +11,7 @@ export default function ProfileMenu({ user, logoutApp }) {
     <>
 
       <div className="profile-wrapper" >
-        <span className="profile-text text-capitalize text-white">{user}</span>
+        <span className="profile-text text-capitalize">{user}</span>
 
         <div className="dropdown-box">
           <div className="dropdown-item" onClick={() => setOpenModal(true)}

@@ -20,6 +20,7 @@
   border-radius: 8px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
   opacity: 0;
+  color: black !important;
   transform: translateY(10px);
   visibility: hidden;
   transition: all 0.3s ease;
@@ -38,7 +39,8 @@
 }
 
 .dropdown-item:hover {
-  background: #ebc6c6 !important;
+  background: #1e293b !important;
+  color: #ffff !important;
 }
 
 

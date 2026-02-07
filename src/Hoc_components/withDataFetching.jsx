@@ -19,7 +19,7 @@ function withDataFetching(WrappedComponent, apiUrl) {
                     const response = await fetch(apiUrl);
                     const data = await response.json();
                     if (!response.ok) {
-                        throw new Error(data.message || 'Something went wrong')
+                        throw new Error(data.message ?? 'Something went wrong')
                     }
                     setSuccess(data.products);
                 } catch (error) {
