@@ -4,15 +4,12 @@ import withDataFetching from "../Hoc_components/withDataFetching";
 
 function About() {
 
-
     const searchBoxRef = useRef(null);
     const timerRef = useRef(null);
     const lockRef = useRef(false);
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(null);
     const [failed, setFailed] = useState(null);
-
-
 
 
     useEffect(() => {

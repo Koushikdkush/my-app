@@ -1,4 +1,4 @@
-import { Link, Outlet, useNavigate } from "react-router";
+import { Outlet, useNavigate } from "react-router";
 import { useState } from 'react';
 import '../App.css';
 import { useAuthContext } from "../authProvider/authProvider";
