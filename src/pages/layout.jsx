@@ -24,8 +24,8 @@ function SideBar() {
 
     const menuItems = [
         { name: "Dashboard", icon: "🏠", to: '/' },
-        { name: "Users", icon: "👤", to: '/about' },
-        { name: "Products", icon: "📦", to: '/profile/1' },
+        { name: "About", icon: "👤", to: '/about' },
+        { name: "Profile", icon: "📦", to: '/profile/1' },
     ];
 
     return (
