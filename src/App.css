@@ -5,7 +5,6 @@
   box-sizing: border-box;
 }
 
-
 /* ===================== NAVBAR ===================== */
 .nav {
   height: 60px;
@@ -61,36 +60,52 @@
   margin-top: 20px;
   padding: 0;
 }
-
+/* li is just structure now */
 .menu-item {
+  list-style: none;
+}
+
+/* NavLink becomes the real menu item */
+.menu-link {
   display: flex;
   align-items: center;
   gap: 15px;
   padding: 12px 20px;
+  text-decoration: none;
+  color: white;
+  transition: background 0.2s ease, color 0.2s ease;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background 0.2s ease;
 }
 
-.menu-item:hover {
+/* hover */
+.menu-link:hover {
   background: #1e293b;
 }
 
-.menu-item .icon {
+/* active route */
+.menu-link.active {
+  background: #334155;
+  color: #fff;
+  font-weight: 600;
+}
+
+/* icon */
+.menu-link .icon {
   font-size: 20px;
   min-width: 30px;
   text-align: center;
 }
 
-.menu-item .label a {
-  color: white;
-  text-decoration: none;
+/* label */
+.menu-link .label {
   font-size: 15px;
 }
 
 /* ===================== MAIN CONTENT ===================== */
 .main-content {
-  margin-top: 60px;     /* below navbar */
-  margin-left: 230px;   /* sidebar width */
+  margin-top: 60px; /* below navbar */
+  margin-left: 230px; /* sidebar width */
   padding: 20px;
   transition: margin-left 0.3s ease;
 }

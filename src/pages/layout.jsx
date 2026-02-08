@@ -3,6 +3,7 @@ import { useState } from 'react';
 import '../App.css';
 import { useAuthContext } from "../authProvider/authProvider";
 import ProfileMenu from "../components/ProfileMenu";
+import { NavLink } from "react-router-dom";
 
 function Layout() {
     return (
@@ -43,10 +44,15 @@ function SideBar() {
             <ul className="menu">
                 {menuItems.map((item, index) => (
                     <li onClick={() => navigate(item.to)} key={index} className="menu-item">
-                        <span className="icon">{item.icon}</span>
-                        {!collapsed && <span className="label">
-                            {item.name}
-                        </span>}
+                        <NavLink
+                            to={item.to}
+                            className={({ isActive }) =>
+                                `menu-link ${isActive ? "active" : ""}`
+                            }
+                        >
+                            <span className="icon">{item.icon}</span>
+                            {!collapsed && <span className="label">{item.name}</span>}
+                        </NavLink>
                     </li>
                 ))}
             </ul>
@@ -64,7 +70,7 @@ function NavBar() {
     return (
         <>
             <nav className="nav d-flex">
-                    <ProfileMenu logoutApp={logoutApp} user={'Hi, ' + (user ? user.username : 'Guest')} />
+                <ProfileMenu logoutApp={logoutApp} user={'Hi, ' + (user ? user.username : 'Guest')} />
             </nav>
         </>
     )

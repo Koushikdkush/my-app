@@ -1,56 +1,73 @@
-import React, { useState } from "react";
-import { useEffect } from "react";
+import React, { useMemo, useState } from "react";
 
 function ProductDataList({ success }) {
 
-    const [products, setProducts] = useState([]);
-    const [page, setPage] = useState(0);
-    const [limit, setLimit] = useState(10);
+    const [page, setPage] = useState(1);
+    const [product, setUiState] = useState({});
 
-
-    useEffect(() => {
-
+    // initial load of Products 
+    const parsedProducts = useMemo(() => {
         if (success) {
-            const parsed = success.map((ele) => ({
-                ...ele, showMore: false,
-                updateStatus: 'Order Now'
-            }))
-            setProducts(parsed.slice(page, limit));
+            return success.map((ele) => ({
+                ...ele, showMore: product[ele.id]?.showMore ?? false,
+                updateStatus: product[ele.id]?.updateStatus ?? 'Order Now'
+            }));
         }
-    }, [success, page, limit]);
+    }, [success, product]);
+
+
+    // paginated products 
+    const paginatedProds = useMemo(() => {
+        if (!parsedProducts) return [];
+
+        const pagePoint = (page - 1) * 10;
+        return parsedProducts && parsedProducts.slice(pagePoint, pagePoint + 10);
+        
+    }, [parsedProducts, page]);
+
 
     function toggleMore(productId) {
-
-        setProducts(prev => (
-            prev.map((ele) => (ele.id === productId ? { ...ele, showMore: !ele.showMore } : ele))
-        ));
+        setUiState(prev => ({
+            ...prev,
+            [productId.id]: {
+                ...prev[productId.id],
+                showMore: !prev[productId.id]?.showMore
+            }
+        }));
     }
 
 
     function update_cart(productId) {
-        setProducts(prev => (
-            prev.map((prod) => (prod.id === productId ? { ...prod, updateStatus: 'Added To Cart' } : prod))
-        ))
+
+        setUiState(prev => ({
+            ...prev,
+            [productId.id]: {
+                ...prev[productId.id],
+                updateStatus: 'Added To Cart'
+            }
+        }));
     }
 
     function removeCart(productId) {
-        setProducts(prev => (
-            prev.map((prod) => (prod.id === productId ? { ...prod, updateStatus: 'Order Now' } : prod))
-        ))
+        setUiState(prev => ({
+            ...prev,
+            [productId]: {
+                ...prev[productId],
+                updateStatus: 'Order Now'
+            }
+        }));
     }
 
     function next() {
-        setPage(p => p + 10);
-        setLimit(l => l + 10);
+        setPage(p => p + 1);
     }
 
     function previous() {
-        if (page <= 0) return;
-        setPage(p => p <= 10 ? 0 : p - 10);
-        setLimit(l => l === 10 ? 10 : l - 10);
+        if (page === 1) return;
+        setPage(p => p - 1);
     }
 
-    if (!products.length) return null;
+    if (!paginatedProds.length) return null;
 
     return (
         <>
@@ -64,7 +81,7 @@ function ProductDataList({ success }) {
                 </div>
                 <div className="row g-3 mt-2">
                     {
-                        products && products.map((product) => (
+                        paginatedProds && paginatedProds.map((product) => (
                             <div key={product.id} className="col-12 col-md-4">
                                 <div className="card" style={{ width: '20rem' }}>
                                     <div className="card-img bg-black">
@@ -73,12 +90,12 @@ function ProductDataList({ success }) {
                                     <div className="card-body">
                                         <p>{!product.showMore ? product.description.slice(0, 50) : product.description.slice(50)}
                                             <span
-                                                onClick={() => toggleMore(product.id)}
+                                                onClick={() => toggleMore(product)}
                                                 style={{ cursor: 'pointer' }} className="text-info fw-semibold ms-1">{!product.showMore ? 'More' : 'Less'}</span>
                                         </p>
                                     </div>
                                     <div className="card-footer d-flex justify-content-between">
-                                        <button onClick={() => update_cart(product.id)}
+                                        <button onClick={() => update_cart(product)}
                                             className={`btn 
                                         ${product.updateStatus === 'Added To Cart' ? 'btn-warning' : 'btn-success'}`}>
                                             {product.updateStatus}</button>
